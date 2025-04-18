@@ -38,7 +38,23 @@ if (choice == "1")
 }
 else if (choice == "2")
 {
-    Console.WriteLine("Transaction 2");
+    string url = "https://localhost:7222/api/Weathers";
+
+    using (HttpClient client = new HttpClient())
+    {
+        HttpResponseMessage response = await client.GetAsync(url);
+        string responseBody = await response.Content.ReadAsStringAsync();
+        JArray jArray = JArray.Parse(responseBody);
+
+        foreach (var item in jArray)
+        {
+            string cityName = item["cityName"].ToString();
+            string cityTemp = item["temp"].ToString();
+            Console.WriteLine($"City Name: {cityName} / City Temp: {cityTemp}");
+            
+           
+        }
+    }
 }
 else if (choice == "3")
 {
