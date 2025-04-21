@@ -50,7 +50,7 @@ else if (choice == "2")
         {
             string cityName = item["cityName"].ToString();
             string cityTemp = item["temp"].ToString();
-            Console.WriteLine($"City Name: {cityName} / City Temp: {cityTemp}");
+            Console.WriteLine($"City Name: {cityName} ----- City Temp: {cityTemp}");
             
            
         }
@@ -58,7 +58,7 @@ else if (choice == "2")
 }
 else if (choice == "3")
 {
-    Console.WriteLine("Transaction 3");
+    Console.WriteLine("Transaction 3.");
 }
 else if (choice == "4")
 {
