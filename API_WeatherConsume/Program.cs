@@ -97,6 +97,7 @@ else if (choice == "3")
             StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, content);
             response.EnsureSuccessStatusCode();
+            Console.WriteLine("New city added successfully.");
         }
         catch (HttpRequestException httpRequestException)
         {
