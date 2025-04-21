@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text.Json.Nodes;
 
 Console.WriteLine("Welcome to API Consume Application");
@@ -58,7 +59,59 @@ else if (choice == "2")
 }
 else if (choice == "3")
 {
-    Console.WriteLine("Transaction 3.");
+    Console.WriteLine("New Data");
+    Console.WriteLine();
+    string cityName,country,detail;
+    decimal temp;
+
+    Console.Write("City Name: ");
+    cityName = Console.ReadLine();
+
+    Console.Write("Country: ");
+    country = Console.ReadLine();
+
+    Console.Write("Detail: ");
+    detail = Console.ReadLine();
+
+    Console.Write("Temp: ");
+    temp = decimal.Parse(Console.ReadLine());
+
+
+
+    string url = "https://localhost:7222/api/Weathers";
+
+    var newWeatherCity = new
+    {
+        CityName = cityName,
+        Country = country,
+        Detail = detail,
+        Temp = temp       
+    };
+
+
+    using (HttpClient client = new HttpClient())
+    {
+        try
+        {
+            string json = JsonConvert.SerializeObject(newWeatherCity);
+            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, content);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (HttpRequestException httpRequestException)
+        {
+            
+            Console.WriteLine($"HTTP Hatası: {httpRequestException.Message}");
+        }
+        catch (Exception ex)
+        {
+            
+            Console.WriteLine($"Bir hata oluştu: {ex.Message}");
+        }
+
+    }
+
+
 }
 else if (choice == "4")
 {
