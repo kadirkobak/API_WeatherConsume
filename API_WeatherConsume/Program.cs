@@ -52,8 +52,8 @@ else if (choice == "2")
             string cityName = item["cityName"].ToString();
             string cityTemp = item["temp"].ToString();
             Console.WriteLine($"City Name: {cityName} ----- City Temp: {cityTemp}");
-            
-           
+
+
         }
     }
 }
@@ -61,7 +61,7 @@ else if (choice == "3")
 {
     Console.WriteLine("New Data");
     Console.WriteLine();
-    string cityName,country,detail;
+    string cityName, country, detail;
     decimal temp;
 
     Console.Write("City Name: ");
@@ -85,7 +85,7 @@ else if (choice == "3")
         CityName = cityName,
         Country = country,
         Detail = detail,
-        Temp = temp       
+        Temp = temp
     };
 
 
@@ -101,12 +101,12 @@ else if (choice == "3")
         }
         catch (HttpRequestException httpRequestException)
         {
-            
+
             Console.WriteLine($"HTTP error: {httpRequestException.Message}");
         }
         catch (Exception ex)
         {
-            
+
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
 
@@ -121,7 +121,7 @@ else if (choice == "4")
     Console.Write("Enter the id value you want to delete: ");
     int id = int.Parse(Console.ReadLine());
 
-    using(HttpClient client = new HttpClient())
+    using (HttpClient client = new HttpClient())
     {
         try
         {
@@ -144,7 +144,56 @@ else if (choice == "4")
 }
 else if (choice == "5")
 {
-    Console.WriteLine("Transaction 5");
+    Console.WriteLine("Update Data");
+    Console.WriteLine();
+    string cityName, country, detail;
+    decimal temp;
+    int id;
+
+    Console.Write("City Name: ");
+    cityName = Console.ReadLine();
+
+    Console.Write("Country: ");
+    country = Console.ReadLine();
+
+    Console.Write("Detail: ");
+    detail = Console.ReadLine();
+    Console.Write("Temp: ");
+    temp = decimal.Parse(Console.ReadLine());
+
+    Console.Write("Id: ");
+    id = int.Parse(Console.ReadLine());
+    string url = "https://localhost:7222/api/Weathers";
+
+    var newWeatherCity = new
+    {
+        CityName = cityName,
+        Country = country,
+        Detail = detail,
+        Temp = temp,
+        Id = id
+    };
+
+    using (HttpClient client = new HttpClient())
+    {
+        try
+        {
+            string json = JsonConvert.SerializeObject(newWeatherCity);
+            StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(url, content);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine("City updated successfully.");
+        }
+        catch (HttpRequestException httpRequestException)
+        {
+            Console.WriteLine($"HTTP error: {httpRequestException.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
 }
 else if (choice == "6")
 {
