@@ -102,12 +102,12 @@ else if (choice == "3")
         catch (HttpRequestException httpRequestException)
         {
             
-            Console.WriteLine($"HTTP Hatası: {httpRequestException.Message}");
+            Console.WriteLine($"HTTP error: {httpRequestException.Message}");
         }
         catch (Exception ex)
         {
             
-            Console.WriteLine($"Bir hata oluştu: {ex.Message}");
+            Console.WriteLine($"An error occurred: {ex.Message}");
         }
 
     }
@@ -116,7 +116,31 @@ else if (choice == "3")
 }
 else if (choice == "4")
 {
-    Console.WriteLine("Transaction 4");
+    string url = "https://localhost:7222/api/Weathers?id=";
+
+    Console.Write("Enter the id value you want to delete: ");
+    int id = int.Parse(Console.ReadLine());
+
+    using(HttpClient client = new HttpClient())
+    {
+        try
+        {
+            HttpResponseMessage response = await client.DeleteAsync(url + id);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine("City deleted successfully.");
+        }
+        catch (HttpRequestException httpRequestException)
+        {
+            Console.WriteLine($"HTTP error: {httpRequestException.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+
+
 }
 else if (choice == "5")
 {
