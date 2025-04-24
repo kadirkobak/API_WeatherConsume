@@ -148,7 +148,7 @@ else if (choice == "5")
     Console.WriteLine();
     string cityName, country, detail;
     decimal temp;
-    int id;
+    int cityId;
 
     Console.Write("City Name: ");
     cityName = Console.ReadLine();
@@ -162,16 +162,18 @@ else if (choice == "5")
     temp = decimal.Parse(Console.ReadLine());
 
     Console.Write("Id: ");
-    id = int.Parse(Console.ReadLine());
+    cityId = int.Parse(Console.ReadLine());
+    
     string url = "https://localhost:7222/api/Weathers";
 
     var newWeatherCity = new
     {
+        CityId = cityId,
         CityName = cityName,
         Country = country,
         Detail = detail,
-        Temp = temp,
-        Id = id
+        Temp = temp
+        
     };
 
     using (HttpClient client = new HttpClient())
